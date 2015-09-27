@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Measuring Quality of Life and Health</title>
+  <meta charset="utf-8">
+  <meta name="description" content="Measuring Quality of Life and Health">
+  <meta name="author" content="chrisbob12">
+  <meta name="generator" content="slidify" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/default.css" media="all" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/phone.css" 
+    media="only screen and (max-device-width: 480px)" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/slidify.css" >
+  <link rel="stylesheet" href="libraries/highlighters/highlight.js/css/tomorrow.css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  <link rel=stylesheet href="./assets/css/ribbons.css"></link>
+
+  
+  <!-- Grab CDN jQuery, fall back to local if offline -->
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+  <script>window.jQuery || document.write('<script src="libraries/widgets/quiz/js/jquery.js"><\/script>')</script> 
+  <script data-main="libraries/frameworks/io2012/js/slides" 
+    src="libraries/frameworks/io2012/js/require-1.0.8.min.js">
+  </script>
+  
+  
+
+</head>
+<body style="opacity: 0">
+  <slides class="layout-widescreen">
+    
+    <!-- LOGO SLIDE -->
+        <slide class="title-slide segue nobackground">
+  <hgroup class="auto-fadein">
+    <h1>Measuring Quality of Life and Health</h1>
+    <h2>Implementing the Euroqol EQ-5D-5L for social media</h2>
+    <p>chrisbob12<br/></p>
+  </hgroup>
+  <article></article>  
+</slide>
+    
+
+    <!-- SLIDES -->
+    <slide class="" id="slide-1" style="background:;">
+  <hgroup>
+    <h2>The EQ-5D tool</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>This presentation is about an app developed for the Coursera &#39;Developing Data Products&#39; course, and reflects the author&#39;s interest in developing outcome measures which can be used for evaluating healthcare service improvement 
+interventions.</p>
+
+<ul>
+<li>EQ-5D is a standardised instrument for use as a measure of health outcome.</li>
+<li>Applicable to a wide range of health conditions and treatments, the EQ-5D health questionnaire provides a simple 
+descriptive profile and a single index value for health status.</li>
+<li>Full details may be found at the Euroqol website:</li>
+</ul>
+
+<p><a href="http://www.euroqol.org/home.html">http://www.euroqol.org/home.html</a></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-2" style="background:;">
+  <hgroup>
+    <h2>An electronic EQ-5D questionnaire</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>It would be possible to make data collection for the EQ-5D fully electronic</li>
+<li>Advantages of presenting the questionnaire as an app like this include
+
+<ul>
+<li>elimination of transcription errors compared with paper questionnaires</li>
+<li>can be deployed over smart phone for clients to complete outside of care setting</li>
+</ul></li>
+<li>This is not the purpose of the app</li>
+<li>The app is an attempt at slight &#39;gamification&#39; of the questionnaire.</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-3" style="background:;">
+  <hgroup>
+    <h2>A simple gamification app</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>The app can be seen here:
+<a href="https://chrisbob12.shinyapps.io/Health_utility_app">https://chrisbob12.shinyapps.io/Health_utility_app</a></p>
+
+<ul>
+<li>Euroqol provide a table of different utility indices normalised for different countries</li>
+<li>These indices can be used to calculate QALYs or quality adjusted life years</li>
+<li>The app uses the health states and country entered to look up the health  index from Euroqol&#39;s data table</li>
+<li>EQ-5D also has a self-assessment score from 0-100</li>
+<li>Rather than calculating QALYs, the app compares the user&#39;s self-assessment with a scaled version of the utility index - this <b>is</b> nonsensical from a healthcare economics perspective, but the point is to get users to engage with a questionnaire</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-4" style="background:;">
+  <hgroup>
+    <h2>The &#39;game&#39;</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>The index is scaled against the minimum and maximum values (-0.654 to 1.000) in the table, so that the difference between this value and the self-assessed health value may be calculated</li>
+<li>The user can see how their perception of their health differs from a value based on the index - do they think they are in reasonable health despite objective limitations in their quality of life? Or worse?</li>
+</ul>
+
+<p>Let&#39;s assume a score of 54321 in Japan; this returns an index of 0.256. Let&#39;s also assume the user self-assesses at 50% health. Here&#39;s the code to make the calculation -</p>
+
+<pre><code class="r">EQ5index &lt;- 0.256
+self_ax &lt;- 50
+score &lt;- self_ax-((EQ5index+0.654)*100/1.654)
+score
+</code></pre>
+
+<pre><code>## [1] -5.018138
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+    <slide class="backdrop"></slide>
+  </slides>
+  <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
+    <ul>
+      <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=1 title='The EQ-5D tool'>
+         1
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=2 title='An electronic EQ-5D questionnaire'>
+         2
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=3 title='A simple gamification app'>
+         3
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=4 title='The &#39;game&#39;'>
+         4
+      </a>
+    </li>
+  </ul>
+  </div>  <!--[if IE]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
+    </script>
+    <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
+</body>
+  <!-- Load Javascripts for Widgets -->
+  
+  <!-- LOAD HIGHLIGHTER JS FILES -->
+  <script src="libraries/highlighters/highlight.js/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <!-- DONE LOADING HIGHLIGHTER JS FILES -->
+   
+  </html>

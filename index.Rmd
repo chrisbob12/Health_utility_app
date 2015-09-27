@@ -1,0 +1,63 @@
+---
+title       : Measuring Quality of Life and Health
+subtitle    : Implementing the Euroqol EQ-5D-5L for social media
+author      : chrisbob12
+job         : 
+framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
+highlighter : highlight.js  # {highlight.js, prettify, highlight}
+hitheme     : tomorrow      # 
+widgets     : []            # {mathjax, quiz, bootstrap}
+mode        : selfcontained # {standalone, draft}
+knit        : slidify::knit2slides
+---
+
+## The EQ-5D tool
+
+This presentation is about an app developed for the Coursera 'Developing Data Products' course, and reflects the author's interest in developing outcome measures which can be used for evaluating healthcare service improvement 
+interventions.
+
+* EQ-5D is a standardised instrument for use as a measure of health outcome.
+* Applicable to a wide range of health conditions and treatments, the EQ-5D health questionnaire provides a simple 
+descriptive profile and a single index value for health status.
+* Full details may be found at the Euroqol website:
+
+http://www.euroqol.org/home.html
+
+---
+
+## An electronic EQ-5D questionnaire
+
+
+* It would be possible to make data collection for the EQ-5D fully electronic
+* Advantages of presenting the questionnaire as an app like this include
+  + elimination of transcription errors compared with paper questionnaires
+  + can be deployed over smart phone for clients to complete outside of care setting
+* This is not the purpose of the app
+* The app is an attempt at slight 'gamification' of the questionnaire.
+
+---
+
+## A simple gamification app
+The app can be seen here:
+https://chrisbob12.shinyapps.io/Health_utility_app
+
+* Euroqol provide a table of different utility indices normalised for different countries
+* These indices can be used to calculate QALYs or quality adjusted life years
+* The app uses the health states and country entered to look up the health  index from Euroqol's data table
+* EQ-5D also has a self-assessment score from 0-100
+* Rather than calculating QALYs, the app compares the user's self-assessment with a scaled version of the utility index - this <b>is</b> nonsensical from a healthcare economics perspective, but the point is to get users to engage with a questionnaire
+
+---
+
+## The 'game'
+ 
+* The index is scaled against the minimum and maximum values (-0.654 to 1.000) in the table, so that the difference between this value and the self-assessed health value may be calculated
+* The user can see how their perception of their health differs from a value based on the index - do they think they are in reasonable health despite objective limitations in their quality of life? Or worse?
+
+Let's assume a score of 54321 in Japan; this returns an index of 0.256. Let's also assume the user self-assesses at 50% health. Here's the code to make the calculation -
+```{r}
+EQ5index <- 0.256
+self_ax <- 50
+score <- self_ax-((EQ5index+0.654)*100/1.654)
+score
+```
